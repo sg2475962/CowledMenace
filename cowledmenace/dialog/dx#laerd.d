@@ -88,7 +88,7 @@ CHAIN IF ~NumTimesTalkedTo(0) Global("LaeralSpawned","GLOBAL",1) !AreaCheck("DX#
 	+ ~Global("ZallaFlee","GLOBAL",1)~ + @905 EXTERN dx#laerd 920
 	+ ~Global("ZallaIntro","GLOBAL",1) GlobalLT("ZallaFlee","GLOBAL",1)~ + @906 EXTERN dx#laerd 940
 	++ @907 EXTERN dx#laerd 960
-	+ ~Global("ZallaFlee","GLOBAL",1) Global("BribedCowled","GLOBAL",1) AreaCheck("bg0800")~ + @908 EXTERN dx#laerd 920
+	+ ~Global("ZallaFlee","GLOBAL",1) Global("BribedCowled","GLOBAL",1) AreaCheck("ar0800")~ + @908 EXTERN dx#laerd 920
 
 CHAIN dx#laerd 920
 	@920

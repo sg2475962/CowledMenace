@@ -6,7 +6,7 @@
 
 BACKUP ~cowledmenace/backup~
 AUTHOR ~Daxtreme at http://gibberlings3.net~  
-VERSION ~1.0.1~
+VERSION ~1.1.1a~
 
 ALWAYS
 	INCLUDE ~cowledmenace/common.tpa~
@@ -24,7 +24,7 @@ ASK_EVERY_COMPONENT                                                             
 
  BEGIN @0 DESIGNATED 1000
 
- 	REQUIRE_PREDICATE GAME_IS ~eet~ @49 //Required file missing -- this mod requires EET
+ 	REQUIRE_PREDICATE GAME_IS ~eet bg2ee~  @49 //Required file missing -- this mod requires EET
 
 	COMPILE ~cowledmenace/dialog/dx#zalla.d~														// Compile dialog files
 		~cowledmenace/dialog/dx#laerd.d~
@@ -234,55 +234,116 @@ ASK_EVERY_COMPONENT                                                             
 	BUT_ONLY
 
 // Add a Twisted Rune enclave in Baldur's Gate East
-
-	COPY_EXISTING ~BG0800.are~ ~override~
-		PATCH_IF SOURCE_SIZE > 0x28f BEGIN
-  			LPF ~fj_are_structure~
-    			INT_VAR
-   				fj_type         = 0    	//trap
- 				fj_box_left    = 142 	 //smallest x
-	    		fj_box_top     = 2652   //smallest y
-    			fj_box_right   = 207 	 //biggest x 
-    			fj_box_bottom  = 2710 	//biggest y
-    			fj_flags	   = 2 		// trap resets itself
-	    		fj_loc_x       = 170 	//between smallest and biggest x
-    			fj_loc_y       = 2700 	//between smallest and biggest y
-    			fj_vertex_0    = 142 + (2670 << 16) 
-    			fj_vertex_1    = 183 + (2652 << 16)
-	    		fj_vertex_2    = 207 + (2686 << 16)
-    			fj_vertex_3    = 165 + (2710 << 16)
-    			STR_VAR
-	    		fj_structure_type   = region
-    			fj_trap_detect      = 0
-    			fj_trap_active      = 1
-    			fj_trap_status      = 0 
-	    		fj_name             = dx#tet1			 // script name of the trigger area
-    			fj_reg_script   = dx#tet1 			// this would be the assigned script name
-  			END
-  			LPF ~fj_are_structure~
-    			INT_VAR
-   				fj_type         = 0    	//trap
- 				fj_box_left    = 175 	 //smallest x
-	    		fj_box_top     = 2740   //smallest y
-    			fj_box_right   = 510 	 //biggest x 
-    			fj_box_bottom  = 2967 	//biggest y
-	    		fj_loc_x       = 300 	//between smallest and biggest x
-    			fj_loc_y       = 2800 	//between smallest and biggest y
-    			fj_vertex_0    = 175 + (2833 << 16) 
-    			fj_vertex_1    = 241 + (2967 << 16)
-	    		fj_vertex_2    = 510 + (2880 << 16)
-    			fj_vertex_3    = 336 + (2740 << 16)
-    			STR_VAR
-	    		fj_structure_type   = region
-    			fj_trap_detect      = 0
-    			fj_trap_active      = 1
-    			fj_trap_status      = 0 
-	    		fj_name             = dx#tw1			 // script name of the trigger area
-    			fj_reg_script   = dx#tw1 			// this would be the assigned script name
-  			END
-  		END
-  	BUT_ONLY
-
+  ACTION_IF GAME_IS ~bg2ee~ BEGIN
+    // add portal to baldur's gate behind zallanora
+    COPY_EXISTING ~ar0800.are~ ~override~
+      PATCH_IF SOURCE_SIZE > 0x28f BEGIN
+          LPF ~fj_are_structure~ // teleport if  rogue stone
+            INT_VAR
+            fj_type         = 0    	//trap
+            fj_box_left    = 2382 	 //smallest x
+            fj_box_top     = 744   //smallest y
+            fj_box_right   = 2700 	 //biggest x +65
+            fj_box_bottom  = 1010 	//biggest y
+            fj_flags	   = 2 		// trap resets itself
+            fj_loc_x       = 2580 	//between smallest and biggest x
+            fj_loc_y       = 920 	//between smallest and biggest y
+            fj_vertex_0    = 2382 + (844 << 16)  
+            fj_vertex_1    = 2536 + (744 << 16)
+            fj_vertex_2    = 2700 + (865 << 16)
+            fj_vertex_3    = 2550 + (1010 << 16)
+            STR_VAR
+            fj_structure_type   = region
+            fj_trap_detect      = 0
+            fj_trap_active      = 1
+            fj_trap_status      = 0 
+            fj_name             = dx#tet1			 // script name of the trigger area
+            fj_reg_script   = dx#tet1 			// this would be the assigned script name
+          END
+          LPF ~fj_are_structure~ // warn on rogue stone
+            INT_VAR
+            fj_type         = 0    	//trap
+            fj_box_left    = 2319 	 //smallest x
+            fj_box_top     = 844   //smallest y
+            fj_box_right   = 2767 	 //biggest x +65
+            fj_box_bottom  = 1291 	//biggest y
+            fj_flags	   = 2 		// trap resets itself
+            fj_loc_x       = 2500 	//between smallest and biggest x
+            fj_loc_y       = 1000 	//between smallest and biggest y
+            fj_vertex_0    = 2319 + (1206 << 16) 
+            fj_vertex_1    = 2686 + (844 << 16)
+            fj_vertex_2    = 2767 + (907 << 16)
+            fj_vertex_3    = 2407 + (1291 << 16)
+            STR_VAR
+            fj_structure_type   = region
+            fj_trap_detect      = 0
+            fj_trap_active      = 1
+            fj_trap_status      = 0 
+            fj_name             = dx#tw1			 // script name of the trigger area
+            fj_reg_script   = dx#tw1 			// this would be the assigned script name
+          END
+          /*LPF ~fj_are_structure~ // portal anim
+            INT_VAR
+            fj_flags	   = 0b1000000000111	
+            fj_loc_x       = 2580 	//between smallest and biggest x
+            fj_loc_y       = 920 	//between smallest and biggest y
+            
+            STR_VAR
+            fj_structure_type   = animation
+            fj_name             = AM1512PA	
+            fj_bam_resref   = AM1512PA 			
+          END*/
+        END
+      BUT_ONLY
+  END ELSE BEGIN
+    COPY_EXISTING ~BG0800.are~ ~override~
+      PATCH_IF SOURCE_SIZE > 0x28f BEGIN
+          LPF ~fj_are_structure~
+            INT_VAR
+            fj_type         = 0    	//trap
+          fj_box_left    = 142 	 //smallest x
+            fj_box_top     = 2652   //smallest y
+            fj_box_right   = 207 	 //biggest x 
+            fj_box_bottom  = 2710 	//biggest y
+            fj_flags	   = 2 		// trap resets itself
+            fj_loc_x       = 170 	//between smallest and biggest x
+            fj_loc_y       = 2700 	//between smallest and biggest y
+            fj_vertex_0    = 142 + (2670 << 16) 
+            fj_vertex_1    = 183 + (2652 << 16)
+            fj_vertex_2    = 207 + (2686 << 16)
+            fj_vertex_3    = 165 + (2710 << 16)
+            STR_VAR
+            fj_structure_type   = region
+            fj_trap_detect      = 0
+            fj_trap_active      = 1
+            fj_trap_status      = 0 
+            fj_name             = dx#tet1			 // script name of the trigger area
+            fj_reg_script   = dx#tet1 			// this would be the assigned script name
+          END
+          LPF ~fj_are_structure~
+            INT_VAR
+            fj_type         = 0    	//trap
+          fj_box_left    = 175 	 //smallest x
+            fj_box_top     = 2740   //smallest y
+            fj_box_right   = 510 	 //biggest x 
+            fj_box_bottom  = 2967 	//biggest y
+            fj_loc_x       = 300 	//between smallest and biggest x
+            fj_loc_y       = 2800 	//between smallest and biggest y
+            fj_vertex_0    = 175 + (2833 << 16) 
+            fj_vertex_1    = 241 + (2967 << 16)
+            fj_vertex_2    = 510 + (2880 << 16)
+            fj_vertex_3    = 336 + (2740 << 16)
+            STR_VAR
+            fj_structure_type   = region
+            fj_trap_detect      = 0
+            fj_trap_active      = 1
+            fj_trap_status      = 0 
+            fj_name             = dx#tw1			 // script name of the trigger area
+            fj_reg_script   = dx#tw1 			// this would be the assigned script name
+          END
+        END
+      BUT_ONLY
+  END
 // Add Twisted Rune members in 2nd Enclave
 
 	COPY_EXISTING ~dx#001.are~ ~override~ 

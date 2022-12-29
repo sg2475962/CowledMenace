@@ -3,6 +3,7 @@
 *.zip
 *.tar.gz
 *.exe
+*.bat
 !iconv.exe
 !oggdec.exe
 !tisunpack.exe
